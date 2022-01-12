@@ -1,4 +1,4 @@
-package missionapi.start;
+package geotools;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -139,8 +139,8 @@ public class Frame1 extends JFrame {
 				String pointName = pointNameTextField.getText();
 				String fontName = fontNameTextField.getText();
 				int fontSize = Integer.parseInt(fontSizeTextField.getText());
-				MissionAPIMap.API.addPoint(pType, lat, lon, pointName, Color.RED, fontName, fontSize);
-				MissionAPIMap.API.drawTrajectory(Color.BLUE, 2);
+				APIMapConfig.API.addPoint(pType, lat, lon, pointName, Color.RED, fontName, fontSize);
+				APIMapConfig.API.drawTrajectory(Color.BLUE, 2);
 			}
 		});
 		okButton.setBounds(576, 30, 48, 23);
@@ -226,7 +226,7 @@ public class Frame1 extends JFrame {
 
 	private void drawButtonAction() {
 		MISSIONS mType = (MISSIONS) missionComboBox.getSelectedItem();
-		MissionAPIMap.API.drawTrajectory(missionsClass.getMission(mType), Color.RED, 2);
+		APIMapConfig.API.drawTrajectory(missionsClass.getMission(mType), Color.RED, 2, null);
 	}
 	
 	public DefaultTableModel getTableModel() {

@@ -1,4 +1,4 @@
-package missionapi.start;
+package geotools;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -25,11 +25,10 @@ import org.geotools.swing.event.MapMouseEvent;
 import org.geotools.swing.tool.CursorTool;
 
 import missionapi.MissionAPI;
-import missionapi.classes.Map;
 import missionapi.classes.PointClass;
 import missionapi.classes.Styles.POINT_TYPE;
 
-public class MissionAPIMap {
+public class APIMapConfig {
 
 	private static JMapFrame mapFrame;
 	private static MapContent mapContent;
@@ -83,7 +82,7 @@ public class MissionAPIMap {
 		points.add(new PointClass(42, 30, 2, POINT_TYPE.WAYPOINT, "WAYPOINT")); // isimli waypoint
 		points.add(new PointClass(41, 32, 3, POINT_TYPE.WAYPOINT, ""));
 		points.add(new PointClass(37, 39, 4, POINT_TYPE.TARGET, ""));
-		API.drawTrajectory(points, Color.BLUE, 2); // noktalarýn çizdirilmesi
+		API.drawTrajectory(points, Color.BLUE, 2, null); // noktalarýn çizdirilmesi
 		afterDraw();
 	}
 	
@@ -424,7 +423,7 @@ public class MissionAPIMap {
 	                 points.remove(pointNo);
 		             PointClass PC = new PointClass(worldPos.y, worldPos.x,pointNo, pointType, pointName);
 		             points.add(pointNo,PC);
-		             API.drawTrajectory(points, Color.RED, 1);
+		             API.drawTrajectory(points, Color.RED, 2, null);
 					 readyToPrint = true;
                 	 created_graphics.dispose();
                 	 createGraphics2D();

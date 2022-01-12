@@ -1,7 +1,9 @@
-package missionapi.start;
+package geotools.start;
 
 import java.awt.EventQueue;
 import java.io.File;
+
+import geotools.APIMapConfig;
 
 public class StartApp {
 
@@ -14,7 +16,7 @@ public class StartApp {
 			public void run() {
 				ClassLoader classLoader = getClass().getClassLoader();
 				File file = new File(classLoader.getResource("ne_10m_admin_0_countries.shp").getFile());
-				MissionAPIMap.StartApp(file);
+				APIMapConfig.StartApp(file);
 			}
 		});
 	}

@@ -425,10 +425,18 @@ public class MissionAPI {
 	 * Draws trajectory and points (with name) using the given PointClass list.
 	 * 
 	 * @param POINTS_List : List of points
+	 * @param font : null == default font
 	 * 
 	 * */
-	public void drawTrajectory(List<PointClass> POINTS_List, Color trajectory_color, int trajectory_width) {
+	public void drawTrajectory(List<PointClass> POINTS_List, Color trajectory_color, int trajectory_width, Font font) {
 		setPointsList(POINTS_List);
+		deletePointsLayer();
+		for (PointClass points : POINTS_List) {
+    		Style PointStyle = StylesClass.getPointStyle(points.getPointType(), StylesClass.getDefaultPointColor(), "Name:", font);
+    		Layer layer = LayerBuilder.createPointLayer(points.getPointName(), points.getLatitude(), points.getLongtitude(), points.getPointNo(), POINT_FEATURE_TYPE, geometryFactory, PointStyle);
+    		POINT_LAYER_List.add(layer);
+    		mapContent.addLayer(layer);
+		}
 		drawTrajectory(trajectory_color, trajectory_width);
 	}
 
@@ -443,7 +451,6 @@ public class MissionAPI {
 		boolean hasRelease = false;
 		if (points_list_size >= 1) {
 			deleteTrajectoryLayer();
-			deletePointsLayer();
 	        int pointLayerSize = POINT_LAYER_List.size();
 			for (PointClass points : POINTS_List) {
 				POINT_TYPE pType = points.getPointType();
@@ -460,13 +467,6 @@ public class MissionAPI {
 					break;
 				default:
 						break;
-				}
-	        	/* ADDS POINT LAYERS TO MAP IF THE POINT LAYERS DOESN'T EXIST */
-	        	if (pointLayerSize == 0) {
-	        		Style PointStyle = StylesClass.getPointStyle(pType, StylesClass.getDefaultPointColor(), null, null);
-	        		Layer layer = LayerBuilder.createPointLayer(points.getPointName(), points.getLatitude(), points.getLongtitude(), points.getPointNo(), POINT_FEATURE_TYPE, geometryFactory, PointStyle);
-	        		POINT_LAYER_List.add(layer);
-	        		mapContent.addLayer(layer);
 				}
 			}
 			

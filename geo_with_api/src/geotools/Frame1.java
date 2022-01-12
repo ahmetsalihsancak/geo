@@ -227,6 +227,7 @@ public class Frame1 extends JFrame {
 	private void drawButtonAction() {
 		MISSIONS mType = (MISSIONS) missionComboBox.getSelectedItem();
 		APIMapConfig.API.drawTrajectory(missionsClass.getMission(mType), Color.RED, 2, null);
+		APIMapConfig.API.afterDraw();
 	}
 	
 	public DefaultTableModel getTableModel() {

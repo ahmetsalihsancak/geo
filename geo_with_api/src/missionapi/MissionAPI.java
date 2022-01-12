@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.geotools.feature.SchemaException;
 import org.geotools.geometry.jts.CurvedGeometryFactory;
@@ -62,6 +65,8 @@ public class MissionAPI {
 	private Style POLYGON_STYLE;
 	
 	private GeometryFactory geometryFactory;
+
+	private static ScheduledExecutorService afterDrawTaskExecutor;
 	
 	public MissionAPI(MapContent mapContent, JMapFrame mapFrame) {
 		
@@ -92,11 +97,14 @@ public class MissionAPI {
 		CIRCLE_FEATURE_TYPE = LayerBuilder.createPolygonFeatureType();
 		RECT_FEATURE_TYPE = LayerBuilder.createPolygonFeatureType();
 		ARC_FEATURE_TYPE = LayerBuilder.createPolygonFeatureType();
+		
 		try {
 			DOT_FEATURE_TYPE = LayerBuilder.createDotFeatureType();
 		} catch (SchemaException e) {
 			e.printStackTrace();
 		}
+		
+		afterDrawTaskExecutor = Executors.newSingleThreadScheduledExecutor();
 	}
 	
 	public void deleteTrajectoryLayer() {
@@ -451,7 +459,6 @@ public class MissionAPI {
 		boolean hasRelease = false;
 		if (points_list_size >= 1) {
 			deleteTrajectoryLayer();
-	        int pointLayerSize = POINT_LAYER_List.size();
 			for (PointClass points : POINTS_List) {
 				POINT_TYPE pType = points.getPointType();
 	        	switch (pType) {
@@ -482,7 +489,7 @@ public class MissionAPI {
 			if (points_list_size >= 2) {
 				if (hasRelease) {
 					POINT_STYLE = StylesClass.getPointStyle(POINT_TYPE.DOT, trajectory_color, trajectory_width, null, null);
-					Layer dashedLineLayer = LayerBuilder.createDashedLineLayer(coords[0].y, coords[0].x, coords[1].y, coords[1].x, DOT_FEATURE_TYPE, geometryFactory, POINT_STYLE);
+					Layer dashedLineLayer = LayerBuilder.createDashedLineLayer(coords[0].y, coords[0].x, coords[1].y, coords[1].x, 30, DOT_FEATURE_TYPE, geometryFactory, POINT_STYLE);
 					mapContent.addLayer(dashedLineLayer);
 					TRAJECTORY_LAYER_List.add(dashedLineLayer);
 				} else {
@@ -504,8 +511,6 @@ public class MissionAPI {
 					TRAJECTORY_LAYER_List.add(layer);
 				}
 			}
-			mapFrame.getMapPane().moveImage(1, 0);
-			mapFrame.getMapPane().moveImage(-1, 0);
 		}
 	}
 	
@@ -570,9 +575,9 @@ public class MissionAPI {
 		LINE_LAYER_List.add(layer);
 	}
 	
-	public void drawDashedLine(double startLat, double startLon, double endLat, double endLon, Color color, float width) {
+	public void drawDashedLine(double startLat, double startLon, double endLat, double endLon, int dotCount, Color color, float width) {
 		POINT_STYLE = StylesClass.getPointStyle(POINT_TYPE.DOT, color, width, null, null);
-		Layer layer = LayerBuilder.createDashedLineLayer(startLat, startLon, endLat, endLon, DOT_FEATURE_TYPE, geometryFactory, POINT_STYLE);
+		Layer layer = LayerBuilder.createDashedLineLayer(startLat, startLon, endLat, endLon, dotCount, DOT_FEATURE_TYPE, geometryFactory, POINT_STYLE);
 		mapContent.addLayer(layer);
 		TRAJECTORY_LAYER_List.add(layer);
 	}
@@ -595,5 +600,15 @@ public class MissionAPI {
 		geoCalc.setDestinationGeographicPoint(lon2, lat2);
         
         return geoCalc.getAzimuth();
+	}
+	
+	public void afterDraw() {
+		mapFrame.getMapPane().moveImage(1, 0);
+		afterDrawTaskExecutor.schedule(
+            () -> {
+        		mapFrame.getMapPane().moveImage(-1, 0);
+            },
+            250,
+            TimeUnit.MILLISECONDS);
 	}
 }

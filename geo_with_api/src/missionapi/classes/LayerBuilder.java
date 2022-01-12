@@ -167,14 +167,29 @@ public class LayerBuilder {
        return lay;
 	}
 
-	public static Layer createDashedLineLayer(double startLat, double startLon, double endLat, double endLon, SimpleFeatureType POINT_TYPE, GeometryFactory geometryFactory, Style PointStyle) {
-		Coordinate[] coords = new Coordinate[31];
+	/**
+	 * Creates a dashed line between 2 points with default number of points setting. 
+	 * 
+	 * */
+	public static Layer createDashedLineLayer(double startLat, double startLon, double endLat, double endLon, 
+			SimpleFeatureType POINT_TYPE, GeometryFactory geometryFactory, Style PointStyle) {
+		return createDashedLineLayer(startLat, startLon, endLat, endLon, 30, POINT_TYPE, geometryFactory, PointStyle);
+	}
+
+	/**
+	 * Creates a dashed line between 2 points with given number of points.
+	 * 
+	 * */
+	public static Layer createDashedLineLayer(double startLat, double startLon, double endLat, double endLon, int dotCount, 
+			SimpleFeatureType POINT_TYPE, GeometryFactory geometryFactory, Style PointStyle) {
+		dotCount++;
+		Coordinate[] coords = new Coordinate[dotCount+1];
 		double lon = endLon - startLon;
 		double lat = endLat - startLat;
-		double a = lat / 30;
-		double b = lon / 30;
+		double a = lat / dotCount;
+		double b = lon / dotCount;
 		
-		for (int i = 0; i < 31; i++) {
+		for (int i = 0; i < dotCount+1; i++) {
 			coords[i] = new Coordinate(startLon+(i*b), startLat+(i*a));
 		}
 		

@@ -26,10 +26,10 @@ public class Missions {
 		case M2:
 			double lat[] = {41.34345,	41.4343,	41.43344,	41.54343,	41.68343443};
 			double lon[] = {35.05434,	36.003434,	36.27343,	36.543343,	36.894333};
-			points.add(new PointClass(lat[0], lon[0], 0, POINT_TYPE.RELEASE, ""));
-			points.add(new PointClass(lat[1], lon[1], 1, POINT_TYPE.WAYPOINT, "")); 
+			points.add(new PointClass(lat[0], lon[0], 0, POINT_TYPE.RELEASE, "R"));
+			points.add(new PointClass(lat[1], lon[1], 1, POINT_TYPE.WAYPOINT, "W1")); 
 			points.add(new PointClass(lat[2], lon[2], 2, POINT_TYPE.WAYPOINT, "")); 
-			points.add(new PointClass(lat[3], lon[3], 3, POINT_TYPE.WAYPOINT, ""));
+			points.add(new PointClass(lat[3], lon[3], 3, POINT_TYPE.WAYPOINT, "W2"));
 			points.add(new PointClass(lat[4], lon[4], 4, POINT_TYPE.TARGET, ""));
 			return points;
 		case M3:

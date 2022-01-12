@@ -44,8 +44,6 @@ public class APIMapConfig {
 	private static DefaultTableModel tableModel;
 	private static Frame1 frame1;
 	
-	private static ScheduledExecutorService afterDrawTaskExecutor = Executors.newSingleThreadScheduledExecutor();
-	
 	private static void TEST() {
 		API.deleteAllLayersAndPoints();
 		API.addReleasePoint(35, 35, Color.MAGENTA); // Ýsimsiz Release Point
@@ -56,7 +54,7 @@ public class APIMapConfig {
 		API.drawIZLAR(33, 33, Color.RED, 1, 150, 25, 0); // 0 derece 150km-25km IZ LAR
 		API.addTarget(37, 39, Color.RED); // Ýsimsiz target
 		API.drawTrajectory(Color.BLUE, 2); // Class içerisinde kaydedilen noktalarýn rotasý
-		afterDraw();
+		API.afterDraw();
 	}
 	
 	private static void TEST2() {
@@ -71,7 +69,7 @@ public class APIMapConfig {
 		API.drawIZLAR(33, 35, Color.BLACK, 2, 150, 25, 45); // 45 derece
 		API.drawIZLAR(28, 35, Color.BLUE, 2, 150, 25, 32); // 32 derece
 		API.drawIZLAR(24, 35, Color.ORANGE, 2, 150, 25, 111); // 111 derece
-		afterDraw();
+		API.afterDraw();
 	}
 	
 	private static void TEST3() {
@@ -83,7 +81,7 @@ public class APIMapConfig {
 		points.add(new PointClass(41, 32, 3, POINT_TYPE.WAYPOINT, ""));
 		points.add(new PointClass(37, 39, 4, POINT_TYPE.TARGET, ""));
 		API.drawTrajectory(points, Color.BLUE, 2, null); // noktalarýn çizdirilmesi
-		afterDraw();
+		API.afterDraw();
 	}
 	
 	private static void TEST4() {
@@ -96,7 +94,7 @@ public class APIMapConfig {
 		double lat[] = {41.34345,	41.4343,	41.43344,	41.54343,	41.68343443};
 		double lon[] = {35.05434,	36.003434,	36.27343,	36.543343,	36.894333};
 		API.drawTrajectory(lat, lon, Color.RED, Color.RED, 2);
-		afterDraw();
+		API.afterDraw();
 	}
 	
 	private static void TEST_MISSION() {
@@ -117,7 +115,7 @@ public class APIMapConfig {
 		API.drawIRLAR(lat[4], lon[4], Color.BLUE, 300);
 		API.drawIZLAR(lat[0], lon[0], Color.RED, 1, 100, 15, 
 				API.calculateAngle(lat[0], lon[0], lat[1], lon[1]));
-		afterDraw();
+		API.afterDraw();
 	}
 	
 	public static void StartApp(File file) {
@@ -179,16 +177,6 @@ public class APIMapConfig {
 		frame1 = new Frame1();
 		frame1.setVisible(true);
 		tableModel = frame1.getTableModel();
-	}
-	
-	private static void afterDraw() {
-		mapFrame.getMapPane().moveImage(1, 0);
-		afterDrawTaskExecutor.schedule(
-            () -> {
-        		mapFrame.getMapPane().moveImage(-1, 0);
-            },
-            100,
-            TimeUnit.MILLISECONDS);
 	}
 	
 	private static void createButtonsOnMapToolbar() {

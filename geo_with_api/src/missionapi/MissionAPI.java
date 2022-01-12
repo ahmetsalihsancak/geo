@@ -593,6 +593,8 @@ public class MissionAPI {
 	/**
 	 * Calculates angle between two points.
 	 * 
+	 * @return 
+	 * 
 	 * */
 	public double calculateAngle(double lat1, double lon1, double lat2, double lon2) {
 		GeodeticCalculator geoCalc = new GeodeticCalculator(DefaultGeographicCRS.WGS84);

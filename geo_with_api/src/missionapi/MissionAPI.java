@@ -604,6 +604,10 @@ public class MissionAPI {
         return geoCalc.getAzimuth();
 	}
 	
+	/**
+	 * Refreshes the map to avoid drawing errors. 
+	 * 
+	 * */
 	public void afterDraw() {
 		mapFrame.getMapPane().moveImage(1, 0);
 		afterDrawTaskExecutor.schedule(

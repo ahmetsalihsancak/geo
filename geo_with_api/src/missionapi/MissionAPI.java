@@ -157,9 +157,6 @@ public class MissionAPI {
 		LINE_LAYER_List.clear();
 	}
 	
-	
-	
-	
 	/**
 	 * Deletes all layers
 	 * */
@@ -211,12 +208,12 @@ public class MissionAPI {
 	        coords2[i] = new Coordinate(dest.getX(),dest.getY());
 		}
 		CoordinateList list = new CoordinateList(coords2);
-        list.closeRing();
-        LinearRing ring = geometryFactory.createLinearRing(list.toCoordinateArray());
-        Geometry circleGeometry = JTS.smooth(ring, 0.0);
-        Polygon circle = geometryFactory.createPolygon((LinearRing) circleGeometry, null);
-        POLYGON_STYLE = StylesClass.getPolygonStyle(color, null, 1);
-        Layer layer = LayerBuilder.createCircleLayer(circle, geometryFactory, CIRCLE_FEATURE_TYPE, POLYGON_STYLE);
+		list.closeRing();
+		LinearRing ring = geometryFactory.createLinearRing(list.toCoordinateArray());
+		Geometry circleGeometry = JTS.smooth(ring, 0.0);
+		Polygon circle = geometryFactory.createPolygon((LinearRing) circleGeometry, null);
+		POLYGON_STYLE = StylesClass.getPolygonStyle(color, null, 1);
+		Layer layer = LayerBuilder.createCircleLayer(circle, geometryFactory, CIRCLE_FEATURE_TYPE, POLYGON_STYLE);
 		mapContent.addLayer(layer);
 		IRLAR_LAYER_List.add(layer);  
 	}
@@ -366,47 +363,55 @@ public class MissionAPI {
 		geoCalc = new GeodeticCalculator(DefaultGeographicCRS.WGS84);
 		double r2 = outer_radius * 1000;
 		angle = angle - 90;
-        Coordinate[] coords3  = new Coordinate[7];
+		Coordinate[] coords3  = new Coordinate[7];
         
-        Point2D dest;
+		Point2D dest;
         
-        geoCalc.setStartingGeographicPoint(centerLon, centerLat);
+		geoCalc.setStartingGeographicPoint(centerLon, centerLat);
         
-        for (int i = 0; i < 3; i++) {
-        	geoCalc.setDirection((360-90*i)+angle, r2);
-            dest = geoCalc.getDestinationGeographicPoint();
-            coords3[i] = new Coordinate(dest.getX(),dest.getY());
+		for (int i = 0; i < 3; i++) {
+			geoCalc.setDirection((360-90*i)+angle, r2);
+        	dest = geoCalc.getDestinationGeographicPoint();
+        	coords3[i] = new Coordinate(dest.getX(),dest.getY());
 		}
         
 		geoCalc.setDirection(180+angle, (r2-1));
 		dest = geoCalc.getDestinationGeographicPoint();
-        coords3[3] = new Coordinate(dest.getX(),dest.getY());
+		coords3[3] = new Coordinate(dest.getX(),dest.getY());
 
-        r2 = inner_radius * 1000;
+		r2 = inner_radius * 1000;
 
-        for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 3; i++) {
         	
-        	geoCalc.setDirection((180+90*i)+angle, r2);
-    		dest = geoCalc.getDestinationGeographicPoint();
-            coords3[i+4] = new Coordinate(dest.getX(),dest.getY());
+			geoCalc.setDirection((180+90*i)+angle, r2);
+			dest = geoCalc.getDestinationGeographicPoint();
+			coords3[i+4] = new Coordinate(dest.getX(),dest.getY());
 		}
         
-        CurvedGeometryFactory curvedFactory = new CurvedGeometryFactory(geometryFactory, Double.MAX_VALUE);
+		CurvedGeometryFactory curvedFactory = new CurvedGeometryFactory(geometryFactory, Double.MAX_VALUE);
 
-        double packedCoords[] = new double[coords3.length*2];
+		double packedCoords[] = new double[coords3.length*2];
         
-        for (int i = 0; i < coords3.length; i++) {
-        	packedCoords[2*i] = coords3[i].x;
-        	packedCoords[(2*i)+1] = coords3[i].y;
+		for (int i = 0; i < coords3.length; i++) {
+			packedCoords[2*i] = coords3[i].x;
+			packedCoords[(2*i)+1] = coords3[i].y;
 		}
         
-        CoordinateSequence coordsSeq = PackedCoordinateSequenceFactory.DOUBLE_FACTORY.create(packedCoords,2);
-        ARC_STYLE = StylesClass.getLineStyle(color, line_width);
-        Layer layer = LayerBuilder.createArcLayer(coordsSeq, curvedFactory, ARC_FEATURE_TYPE, ARC_STYLE);
+		CoordinateSequence coordsSeq = PackedCoordinateSequenceFactory.DOUBLE_FACTORY.create(packedCoords,2);
+		ARC_STYLE = StylesClass.getLineStyle(color, line_width);
+		Layer layer = LayerBuilder.createArcLayer(coordsSeq, curvedFactory, ARC_FEATURE_TYPE, ARC_STYLE);
 		mapContent.addLayer(layer);
 		IZLAR_LAYER_List.add(layer);
 	}
 	
+	/**
+	 * Draws trajectory and points using the given lat-lon arrays.
+	 * <p>
+	 * Points must be entered sequentially. (RELEASE-WAYPOINT(S)-TARGET)
+	 * 
+	 * @param POINTS_List : List of points
+	 * 
+	 * */
 	public void drawTrajectory(double[] lat, double[] lon, Color point_color, Color trajectory_color, int trajectory_width) {
 		addPoint(POINT_TYPE.RELEASE, lat[0], lon[0], point_color);
 		for (int i = 1; i < lon.length-1; i++) {
@@ -420,8 +425,6 @@ public class MissionAPI {
 	 * Draws trajectory and points (with name) using the given PointClass list.
 	 * 
 	 * @param POINTS_List : List of points
-	 * @param col : Trajectory color
-	 * @param width : Trajectory width
 	 * 
 	 * */
 	public void drawTrajectory(List<PointClass> POINTS_List, Color trajectory_color, int trajectory_width) {
@@ -431,9 +434,6 @@ public class MissionAPI {
 
 	/**
 	 * Draws trajectory and points using the points list of this class.
-	 * 
-	 * @param col : Trajectory color
-	 * @param width : Trajectory width
 	 * 
 	 * */
 	public void drawTrajectory(Color trajectory_color, int trajectory_width) {
@@ -533,29 +533,29 @@ public class MissionAPI {
 		
 		geoCalc.setDirection((270-angle), width/2);
 		dest = geoCalc.getDestinationGeographicPoint();
-        coords2[0] = new Coordinate(dest.getX(),dest.getY());
+		coords2[0] = new Coordinate(dest.getX(),dest.getY());
         
 		geoCalc.setStartingGeographicPoint(coords2[0].getX(),coords2[0].getY());
 		geoCalc.setDirection(0-angle, height);
 		dest = geoCalc.getDestinationGeographicPoint();
-        coords2[1] = new Coordinate(dest.getX(),dest.getY());
+		coords2[1] = new Coordinate(dest.getX(),dest.getY());
 
 		geoCalc.setStartingGeographicPoint(coords2[1].getX(),coords2[1].getY());
 		geoCalc.setDirection(90-angle, width);
 		dest = geoCalc.getDestinationGeographicPoint();
-        coords2[2] = new Coordinate(dest.getX(),dest.getY());
+		coords2[2] = new Coordinate(dest.getX(),dest.getY());
         
 		geoCalc.setStartingGeographicPoint(coords2[2].getX(),coords2[2].getY());
 		geoCalc.setDirection(180-angle, height);
 		dest = geoCalc.getDestinationGeographicPoint();
-        coords2[3] = new Coordinate(dest.getX(),dest.getY());
+		coords2[3] = new Coordinate(dest.getX(),dest.getY());
 		
-        coords2[4] = coords2[0];
+		coords2[4] = coords2[0];
         
-        LinearRing ring = geometryFactory.createLinearRing(coords2);
-        Polygon rect = geometryFactory.createPolygon(ring, null);
-        POLYGON_STYLE = StylesClass.getPolygonStyle(col, null, 1);
-        Layer layer = LayerBuilder.createCircleLayer(rect, geometryFactory, RECT_FEATURE_TYPE, POLYGON_STYLE);
+		LinearRing ring = geometryFactory.createLinearRing(coords2);
+		Polygon rect = geometryFactory.createPolygon(ring, null);
+		POLYGON_STYLE = StylesClass.getPolygonStyle(col, null, 1);
+		Layer layer = LayerBuilder.createCircleLayer(rect, geometryFactory, RECT_FEATURE_TYPE, POLYGON_STYLE);
 		mapContent.addLayer(layer);
 		RECT_LAYER_List.add(layer);
 	}
@@ -565,7 +565,7 @@ public class MissionAPI {
 		Coordinate[] coords = new Coordinate[2];
 		coords[0] = new Coordinate(startLon, startLat);
 		coords[1] = new Coordinate(endLon, endLat);
-        Layer layer = LayerBuilder.createPathLayer(coords, TRAJECTORY_LAYER_List.size(), PATH_FEATURE_TYPE, geometryFactory, LINE_STYLE);
+		Layer layer = LayerBuilder.createPathLayer(coords, TRAJECTORY_LAYER_List.size(), PATH_FEATURE_TYPE, geometryFactory, LINE_STYLE);
 		mapContent.addLayer(layer);
 		LINE_LAYER_List.add(layer);
 	}
@@ -591,8 +591,8 @@ public class MissionAPI {
 	 * */
 	public double calculateAngle(double lat1, double lon1, double lat2, double lon2) {
 		GeodeticCalculator geoCalc = new GeodeticCalculator(DefaultGeographicCRS.WGS84);
-        geoCalc.setStartingGeographicPoint(lon1, lat1);
-        geoCalc.setDestinationGeographicPoint(lon2, lat2);
+		geoCalc.setStartingGeographicPoint(lon1, lat1);
+		geoCalc.setDestinationGeographicPoint(lon2, lat2);
         
         return geoCalc.getAzimuth();
 	}

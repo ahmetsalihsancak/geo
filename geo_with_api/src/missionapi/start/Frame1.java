@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import missionapi.classes.Styles.POINT_TYPE;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
@@ -138,8 +139,8 @@ public class Frame1 extends JFrame {
 				String pointName = pointNameTextField.getText();
 				String fontName = fontNameTextField.getText();
 				int fontSize = Integer.parseInt(fontSizeTextField.getText());
-				APIDeneme.API.addPoint(pType, lat, lon, pointName, Color.RED, fontName, fontSize);
-				APIDeneme.API.drawTrajectory(Color.BLUE, 2);
+				MissionAPIMap.API.addPoint(pType, lat, lon, pointName, Color.RED, fontName, fontSize);
+				MissionAPIMap.API.drawTrajectory(Color.BLUE, 2);
 			}
 		});
 		okButton.setBounds(576, 30, 48, 23);
@@ -225,7 +226,7 @@ public class Frame1 extends JFrame {
 
 	private void drawButtonAction() {
 		MISSIONS mType = (MISSIONS) missionComboBox.getSelectedItem();
-		APIDeneme.API.drawTrajectory(missionsClass.getMission(mType), Color.RED, 2);
+		MissionAPIMap.API.drawTrajectory(missionsClass.getMission(mType), Color.RED, 2);
 	}
 	
 	public DefaultTableModel getTableModel() {

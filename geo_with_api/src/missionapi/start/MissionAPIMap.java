@@ -29,7 +29,7 @@ import missionapi.classes.PointClass;
 import missionapi.classes.Styles.POINT_TYPE;
 import missionapi.main.MissionAPI;
 
-public class APIDeneme {
+public class MissionAPIMap {
 
 	private static JMapFrame mapFrame;
 	private static MapContent mapContent;

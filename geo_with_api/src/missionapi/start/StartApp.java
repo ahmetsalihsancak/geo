@@ -3,7 +3,7 @@ package missionapi.start;
 import java.awt.EventQueue;
 import java.io.File;
 
-public class APIDenemeStart {
+public class StartApp {
 
 	/**
 	 * Launch the application.
@@ -14,7 +14,7 @@ public class APIDenemeStart {
 			public void run() {
 				ClassLoader classLoader = getClass().getClassLoader();
 				File file = new File(classLoader.getResource("ne_10m_admin_0_countries.shp").getFile());
-				APIDeneme.StartApp(file);
+				MissionAPIMap.StartApp(file);
 			}
 		});
 	}

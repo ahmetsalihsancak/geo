@@ -56,10 +56,10 @@ public class MissionAPI {
 	private SimpleFeatureType ARC_FEATURE_TYPE;
 	private SimpleFeatureType DOT_FEATURE_TYPE;
 	
-	private  Style LINE_STYLE;
-	private  Style ARC_STYLE;
-	private  Style POINT_STYLE;
-	private  Style POLYGON_STYLE;
+	private Style LINE_STYLE;
+	private Style ARC_STYLE;
+	private Style POINT_STYLE;
+	private Style POLYGON_STYLE;
 	
 	private GeometryFactory geometryFactory;
 	

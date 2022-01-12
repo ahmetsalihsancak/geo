@@ -82,17 +82,17 @@ public class MissionAPI {
 		
 		geometryFactory = JTSFactoryFinder.getGeometryFactory();
 		
-        LINE_STYLE = StylesClass.getLineStyle(Color.RED, 2);
-        ARC_STYLE = StylesClass.getLineStyle();
-        POINT_STYLE = StylesClass.getPointStyle(POINT_TYPE.DEFAULT);
-        POLYGON_STYLE = StylesClass.getPolygonStyle(Color.BLUE, null, 1);
+		LINE_STYLE = StylesClass.getLineStyle(Color.RED, 2);
+		ARC_STYLE = StylesClass.getLineStyle();
+		POINT_STYLE = StylesClass.getPointStyle(POINT_TYPE.DEFAULT);
+		POLYGON_STYLE = StylesClass.getPolygonStyle(Color.BLUE, null, 1);
         
-        POINT_FEATURE_TYPE = LayerBuilder.createPointFeatureType();
-        PATH_FEATURE_TYPE = LayerBuilder.createPathFeatureType();
-        CIRCLE_FEATURE_TYPE = LayerBuilder.createPolygonFeatureType();
-        RECT_FEATURE_TYPE = LayerBuilder.createPolygonFeatureType();
-        ARC_FEATURE_TYPE = LayerBuilder.createPolygonFeatureType();
-        try {
+		POINT_FEATURE_TYPE = LayerBuilder.createPointFeatureType();
+		PATH_FEATURE_TYPE = LayerBuilder.createPathFeatureType();
+		CIRCLE_FEATURE_TYPE = LayerBuilder.createPolygonFeatureType();
+		RECT_FEATURE_TYPE = LayerBuilder.createPolygonFeatureType();
+		ARC_FEATURE_TYPE = LayerBuilder.createPolygonFeatureType();
+		try {
 			DOT_FEATURE_TYPE = LayerBuilder.createDotFeatureType();
 		} catch (SchemaException e) {
 			e.printStackTrace();

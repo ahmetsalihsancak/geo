@@ -24,10 +24,10 @@ import org.geotools.swing.JMapFrame;
 import org.geotools.swing.event.MapMouseEvent;
 import org.geotools.swing.tool.CursorTool;
 
+import missionapi.MissionAPI;
 import missionapi.classes.Map;
 import missionapi.classes.PointClass;
 import missionapi.classes.Styles.POINT_TYPE;
-import missionapi.main.MissionAPI;
 
 public class MissionAPIMap {
 
@@ -44,6 +44,8 @@ public class MissionAPIMap {
 	
 	private static DefaultTableModel tableModel;
 	private static Frame1 frame1;
+	
+	private static ScheduledExecutorService afterDrawTaskExecutor = Executors.newSingleThreadScheduledExecutor();
 	
 	private static void TEST() {
 		API.deleteAllLayersAndPoints();
@@ -182,6 +184,12 @@ public class MissionAPIMap {
 	
 	private static void afterDraw() {
 		mapFrame.getMapPane().moveImage(1, 0);
+		afterDrawTaskExecutor.schedule(
+            () -> {
+        		mapFrame.getMapPane().moveImage(-1, 0);
+            },
+            100,
+            TimeUnit.MILLISECONDS);
 	}
 	
 	private static void createButtonsOnMapToolbar() {

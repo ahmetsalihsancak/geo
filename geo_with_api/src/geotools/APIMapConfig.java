@@ -43,6 +43,7 @@ public class APIMapConfig {
 	
 	private static DefaultTableModel tableModel;
 	private static Frame1 frame1;
+	public static boolean testActive = false;
 	
 	private static void TEST() {
 		API.deleteAllLayersAndPoints();
@@ -55,6 +56,7 @@ public class APIMapConfig {
 		API.addTarget(37, 39, Color.RED); // Ýsimsiz target
 		API.drawTrajectory(Color.BLUE, 2); // Class içerisinde kaydedilen noktalarýn rotasý
 		API.afterDraw();
+		testActive = true;
 	}
 	
 	private static void TEST2() {
@@ -70,6 +72,7 @@ public class APIMapConfig {
 		API.drawIZLAR(28, 35, Color.BLUE, 2, 150, 25, 32); // 32 derece
 		API.drawIZLAR(24, 35, Color.ORANGE, 2, 150, 25, 111); // 111 derece
 		API.afterDraw();
+		testActive = true;
 	}
 	
 	private static void TEST3() {
@@ -82,6 +85,7 @@ public class APIMapConfig {
 		points.add(new PointClass(37, 39, 4, POINT_TYPE.TARGET, ""));
 		API.drawTrajectory(points, Color.BLUE, 2, null); // noktalarýn çizdirilmesi
 		API.afterDraw();
+		testActive = true;
 	}
 	
 	private static void TEST4() {
@@ -95,6 +99,7 @@ public class APIMapConfig {
 		double lon[] = {35.05434,	36.003434,	36.27343,	36.543343,	36.894333};
 		API.drawTrajectory(lat, lon, Color.RED, Color.RED, 2);
 		API.afterDraw();
+		testActive = true;
 	}
 	
 	private static void TEST_MISSION() {
@@ -116,6 +121,7 @@ public class APIMapConfig {
 		API.drawIZLAR(lat[0], lon[0], Color.RED, 1, 100, 15, 
 				API.calculateAngle(lat[0], lon[0], lat[1], lon[1]));
 		API.afterDraw();
+		testActive = true;
 	}
 	
 	public static void StartApp(File file) {
@@ -412,6 +418,7 @@ public class APIMapConfig {
 		             PointClass PC = new PointClass(worldPos.y, worldPos.x,pointNo, pointType, pointName);
 		             points.add(pointNo,PC);
 		             API.drawTrajectory(points, Color.RED, 2, null);
+		             API.afterDraw();
 					 readyToPrint = true;
                 	 created_graphics.dispose();
                 	 createGraphics2D();
@@ -506,8 +513,10 @@ public class APIMapConfig {
               * @param point_no
               */
              private void updateTable(DirectPosition2D world_pos, int point_no, int index) {
-            	 tableModel.setValueAt(world_pos.y,point_no,index);
-            	 tableModel.setValueAt(world_pos.x,point_no,index+1);
+            	 if (!testActive) {
+                	 tableModel.setValueAt(world_pos.y,point_no,index);
+                	 tableModel.setValueAt(world_pos.x,point_no,index+1);
+				}
              }
          }));
 	}

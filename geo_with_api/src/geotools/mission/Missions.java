@@ -1,8 +1,9 @@
-package missionapi.classes;
+package geotools.mission;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import missionapi.classes.PointClass;
 import missionapi.classes.Styles.POINT_TYPE;
 
 public class Missions {

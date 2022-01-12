@@ -340,16 +340,16 @@ public class MissionAPI {
 	 * Adds text.
 	 * 
 	 * @param text : Text to show
-	 * @param lat : Starting latitude of the text
-	 * @param lon : Starting longitude of the text
+	 * @param lat_deg : Starting latitude of the text
+	 * @param lon_deg : Starting longitude of the text
 	 * @param col : Text color
 	 * @param fontname : Font name of the text
 	 * @param size : Size of the text
 	 * */
-	public void drawText(String text, double lat, double lon, Color col, String fontname, int size) {
+	public void drawText(String text, double lat_deg, double lon_deg, Color col, String fontname, int size) {
 		int pointNumber = TEXT_LAYER_List.size();
 		Style style = StylesClass.getTextStyle(text, col, fontname, size);
-		Layer layer = LayerBuilder.createTextLayer(lat, lon, pointNumber, LayerBuilder.createTextFeatureType(), geometryFactory, style);
+		Layer layer = LayerBuilder.createTextLayer(lat_deg, lon_deg, pointNumber, LayerBuilder.createTextFeatureType(), geometryFactory, style);
 		mapContent.addLayer(layer);
 		TEXT_LAYER_List.add(layer);
 	}
@@ -413,19 +413,19 @@ public class MissionAPI {
 	}
 	
 	/**
-	 * Draws trajectory and points using the given lat-lon arrays.
+	 * Draws trajectory and points using the given lat_deg-lon_deg arrays.
 	 * <p>
 	 * Points must be entered sequentially. (RELEASE-WAYPOINT(S)-TARGET)
 	 * 
 	 * @param POINTS_List : List of points
 	 * 
 	 * */
-	public void drawTrajectory(double[] lat, double[] lon, Color point_color, Color trajectory_color, int trajectory_width) {
-		addPoint(POINT_TYPE.RELEASE, lat[0], lon[0], point_color);
-		for (int i = 1; i < lon.length-1; i++) {
-			addPoint(POINT_TYPE.WAYPOINT, lat[i], lon[i], point_color);
+	public void drawTrajectory(double[] lat_deg, double[] lon_deg, Color point_color, Color trajectory_color, int trajectory_width) {
+		addPoint(POINT_TYPE.RELEASE, lat_deg[0], lon_deg[0], point_color);
+		for (int i = 1; i < lon_deg.length-1; i++) {
+			addPoint(POINT_TYPE.WAYPOINT, lat_deg[i], lon_deg[i], point_color);
 		}
-		addPoint(POINT_TYPE.TARGET, lat[lat.length-1], lon[lon.length-1], point_color);
+		addPoint(POINT_TYPE.TARGET, lat_deg[lat_deg.length-1], lon_deg[lon_deg.length-1], point_color);
 		drawTrajectory(trajectory_color, trajectory_width);
 	}
 	
@@ -449,7 +449,7 @@ public class MissionAPI {
 	}
 
 	/**
-	 * Draws trajectory and points using the points list of this class.
+	 * Draws trajectory and points using the points list of {@link MissionAPI}.
 	 * 
 	 * */
 	public void drawTrajectory(Color trajectory_color, int trajectory_width) {
@@ -519,22 +519,22 @@ public class MissionAPI {
 	 * <p>
 	 * LAT/LON point represents the midpoint of the south side of the rectangle.
 	 * 
-	 * @param lat
-	 * @param lon
+	 * @param lat_deg
+	 * @param lon_deg
 	 * @param width 
 	 * @param height
 	 * @param angle
 	 * @param col : Color
 	 * 
 	 * */
-	public void drawRectangle(double lat, double lon, int width, int height, double angle, Color col) {
+	public void drawRectangle(double lat_deg, double lon_deg, int width, int height, double angle, Color col) {
 		height = height * 1000;
 		width = width * 1000;
         Coordinate[] coords2  = new Coordinate[5];
         GeodeticCalculator geoCalc = new GeodeticCalculator(DefaultGeographicCRS.WGS84);
 		Point2D dest;
 		
-		geoCalc.setStartingGeographicPoint(lon, lat);
+		geoCalc.setStartingGeographicPoint(lon_deg, lat_deg);
 		
 		geoCalc.setDirection((270-angle), width/2);
 		dest = geoCalc.getDestinationGeographicPoint();
@@ -565,19 +565,19 @@ public class MissionAPI {
 		RECT_LAYER_List.add(layer);
 	}
 	
-	public void drawLine(double startLat, double startLon, double endLat, double endLon, Color color, float width) {
+	public void drawLine(double startLat_deg, double startLon_deg, double endLat_deg, double endLon_deg, Color color, float width) {
 		LINE_STYLE = StylesClass.getLineStyle(color, width);
 		Coordinate[] coords = new Coordinate[2];
-		coords[0] = new Coordinate(startLon, startLat);
-		coords[1] = new Coordinate(endLon, endLat);
+		coords[0] = new Coordinate(startLon_deg, startLat_deg);
+		coords[1] = new Coordinate(endLon_deg, endLat_deg);
 		Layer layer = LayerBuilder.createPathLayer(coords, TRAJECTORY_LAYER_List.size(), PATH_FEATURE_TYPE, geometryFactory, LINE_STYLE);
 		mapContent.addLayer(layer);
 		LINE_LAYER_List.add(layer);
 	}
 	
-	public void drawDashedLine(double startLat, double startLon, double endLat, double endLon, int dotCount, Color color, float width) {
+	public void drawDashedLine(double startLat_deg, double startLon_deg, double endLat_deg, double endLon_deg, int dotCount, Color color, float width) {
 		POINT_STYLE = StylesClass.getPointStyle(POINT_TYPE.DOT, color, width, null, null);
-		Layer layer = LayerBuilder.createDashedLineLayer(startLat, startLon, endLat, endLon, dotCount, DOT_FEATURE_TYPE, geometryFactory, POINT_STYLE);
+		Layer layer = LayerBuilder.createDashedLineLayer(startLat_deg, startLon_deg, endLat_deg, endLon_deg, dotCount, DOT_FEATURE_TYPE, geometryFactory, POINT_STYLE);
 		mapContent.addLayer(layer);
 		TRAJECTORY_LAYER_List.add(layer);
 	}

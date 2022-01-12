@@ -8,6 +8,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import geotools.mission.Missions;
+import geotools.mission.Missions.MISSIONS;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
@@ -19,8 +23,6 @@ import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.awt.event.ActionEvent;
 
-import missionapi.classes.Missions;
-import missionapi.classes.Missions.MISSIONS;
 import missionapi.classes.PointClass;
 
 import javax.swing.JTable;
@@ -141,6 +143,8 @@ public class Frame1 extends JFrame {
 				int fontSize = Integer.parseInt(fontSizeTextField.getText());
 				APIMapConfig.API.addPoint(pType, lat, lon, pointName, Color.RED, fontName, fontSize);
 				APIMapConfig.API.drawTrajectory(Color.BLUE, 2);
+				APIMapConfig.API.afterDraw();
+				APIMapConfig.testActive = false;
 			}
 		});
 		okButton.setBounds(576, 30, 48, 23);
@@ -225,9 +229,11 @@ public class Frame1 extends JFrame {
 	}
 
 	private void drawButtonAction() {
+		APIMapConfig.API.deleteAllLayersAndPoints();
 		MISSIONS mType = (MISSIONS) missionComboBox.getSelectedItem();
 		APIMapConfig.API.drawTrajectory(missionsClass.getMission(mType), Color.RED, 2, null);
 		APIMapConfig.API.afterDraw();
+		APIMapConfig.testActive = false;
 	}
 	
 	public DefaultTableModel getTableModel() {

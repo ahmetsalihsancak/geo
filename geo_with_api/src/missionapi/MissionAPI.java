@@ -167,6 +167,7 @@ public class MissionAPI {
 	
 	/**
 	 * Deletes all layers
+	 * 
 	 * */
 	public void deleteAllLayers() {
 		deleteIRLAR_Layer();
@@ -180,6 +181,7 @@ public class MissionAPI {
 
 	/**
 	 * Clear points list
+	 * 
 	 * */
 	public void clearPointsList() {
 		POINTS_List.clear();
@@ -187,6 +189,7 @@ public class MissionAPI {
 	
 	/**
 	 * Deletes all layers and point list
+	 * 
 	 * */
 	public void deleteAllLayersAndPoints() {
 		deleteAllLayers();
@@ -194,7 +197,7 @@ public class MissionAPI {
 	}
 	
 	/**
-	 * Draws IR LAR
+	 * Draws IR LAR (Circle)
 	 * 
 	 * @param centerLat : Center latitude of IRLAR
 	 * @param centerLon : Center longitude of IRLAR
@@ -236,6 +239,7 @@ public class MissionAPI {
 	 * @param col : Point color
 	 * @param fontname : Font name of the pointName
 	 * @param size : Size of the pointName
+	 * 
 	 * */
 	public void addWaypoint(double centerLat, double centerLon, String pointName, Color col, String fontname, int size) {
 		addPoint(POINT_TYPE.WAYPOINT, centerLat, centerLon, pointName, col, fontname, size);
@@ -247,6 +251,7 @@ public class MissionAPI {
 	 * @param centerLat : Center latitude of point
 	 * @param centerLon : Center longitude of point
 	 * @param col : Point color
+	 * 
 	 * */
 	public void addWaypoint(double centerLat, double centerLon, Color col) {
 		addWaypoint(centerLat, centerLon, "", col, "", 0);
@@ -261,6 +266,7 @@ public class MissionAPI {
 	 * @param col : Point color
 	 * @param fontname : Font name of the pointName
 	 * @param size : Size of the pointName
+	 * 
 	 * */
 	public void addTarget(double centerLat, double centerLon, String pointName, Color col, String fontname, int size) {
 		addPoint(POINT_TYPE.TARGET, centerLat, centerLon, pointName, col, fontname, size);
@@ -272,6 +278,7 @@ public class MissionAPI {
 	 * @param centerLat : Center latitude of point
 	 * @param centerLon : Center longitude of point
 	 * @param col : Point color
+	 * 
 	 * */
 	public void addTarget(double centerLat, double centerLon, Color col) {
 		addTarget(centerLat, centerLon, "", col, "", 0);
@@ -286,6 +293,7 @@ public class MissionAPI {
 	 * @param col : Point color
 	 * @param fontname : Font name of the pointName
 	 * @param size : Size of the pointName
+	 * 
 	 * */
 	public void addReleasePoint(double centerLat, double centerLon, String pointName, Color col, String fontname, int size) {
 		addPoint(POINT_TYPE.RELEASE, centerLat, centerLon, pointName, col, fontname, size);
@@ -297,6 +305,7 @@ public class MissionAPI {
 	 * @param centerLat : Center latitude of point
 	 * @param centerLon : Center longitude of point
 	 * @param col : Point color
+	 * 
 	 * */
 	public void addReleasePoint(double centerLat, double centerLon, Color col) {
 		addReleasePoint(centerLat, centerLon, "", col, "", 0);
@@ -312,6 +321,7 @@ public class MissionAPI {
 	 * @param col : Point color
 	 * @param fontname : Font name of the pointName
 	 * @param size : Size of the pointName
+	 * 
 	 * */
 	public void addPoint(POINT_TYPE pType, double centerLat, double centerLon, String pointName, Color col, String fontname, int size) {
 		int pointNumber = POINTS_List.size();
@@ -331,6 +341,7 @@ public class MissionAPI {
 	 * @param centerLat : Center latitude of point
 	 * @param centerLon : Center longitude of point
 	 * @param col : Point color
+	 * 
 	 * */
 	public void addPoint(POINT_TYPE pType, double centerLat, double centerLon, Color col) {
 		addPoint(pType, centerLat, centerLon, "", col, "", 0);
@@ -345,6 +356,7 @@ public class MissionAPI {
 	 * @param col : Text color
 	 * @param fontname : Font name of the text
 	 * @param size : Size of the text
+	 * 
 	 * */
 	public void drawText(String text, double lat_deg, double lon_deg, Color col, String fontname, int size) {
 		int pointNumber = TEXT_LAYER_List.size();

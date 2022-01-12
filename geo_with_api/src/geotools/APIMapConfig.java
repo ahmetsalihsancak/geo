@@ -54,7 +54,7 @@ public class APIMapConfig {
 		API.drawText("Ahmet Salih Sancak", 42, 30, Color.ORANGE, "Georgia", 12); // Text
 		API.drawIZLAR(33, 33, Color.RED, 1, 150, 25, 0); // 0 derece 150km-25km IZ LAR
 		API.addTarget(37, 39, Color.RED); // Ýsimsiz target
-		API.drawTrajectory(Color.BLUE, 2); // Class içerisinde kaydedilen noktalarýn rotasý
+		API.drawTrajectory(Color.RED, 2); // Class içerisinde kaydedilen noktalarýn rotasý
 		API.afterDraw();
 		testActive = true;
 	}
@@ -66,7 +66,7 @@ public class APIMapConfig {
 		API.addWaypoint(42, 30, "WAYPOINT", Color.RED, "Georgia", 10); // Ýsimli waypoint
 		API.addWaypoint(41, 32, Color.RED);
 		API.addTarget(37, 39, "Target", Color.RED, "Georgia", 12); // Ýsimli target
-		API.drawTrajectory(Color.BLUE, 2);
+		API.drawTrajectory(Color.RED, 2);
 		API.drawIRLAR(37, 39, Color.BLUE, 300); // 300km IR LAR
 		API.drawIZLAR(33, 35, Color.BLACK, 2, 150, 25, 45); // 45 derece
 		API.drawIZLAR(28, 35, Color.BLUE, 2, 150, 25, 32); // 32 derece
@@ -83,7 +83,7 @@ public class APIMapConfig {
 		points.add(new PointClass(42, 30, 2, POINT_TYPE.WAYPOINT, "WAYPOINT")); // isimli waypoint
 		points.add(new PointClass(41, 32, 3, POINT_TYPE.WAYPOINT, ""));
 		points.add(new PointClass(37, 39, 4, POINT_TYPE.TARGET, ""));
-		API.drawTrajectory(points, Color.BLUE, 2, null); // noktalarýn çizdirilmesi
+		API.drawTrajectory(points, Color.RED, 2, null); // noktalarýn çizdirilmesi
 		API.afterDraw();
 		testActive = true;
 	}

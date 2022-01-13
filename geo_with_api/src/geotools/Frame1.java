@@ -210,7 +210,7 @@ public class Frame1 extends JFrame {
 				drawButtonAction();
 			}
 		});
-		drawButton.setBounds(271, 94, 89, 23);
+		drawButton.setBounds(240, 94, 89, 23);
 		panel.add(drawButton);
 
         tableModel = new DefaultTableModel(

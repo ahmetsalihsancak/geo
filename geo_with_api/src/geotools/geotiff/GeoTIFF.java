@@ -1,4 +1,4 @@
-package geotools.raster;
+package geotools.geotiff;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +28,7 @@ import org.opengis.style.ContrastMethod;
 
 import geotools.Map;
 
-public class ImageLab {
+public class GeoTIFF {
 
     private static StyleFactory sf = CommonFactoryFinder.getStyleFactory();
     private static FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();

@@ -21,7 +21,17 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 public class LayerBuilder {
+	
+	private static int defaultDotCount = 30;
+	
+	public static void setDefaultDotCount(int dotCount) {
+		defaultDotCount = dotCount;
+	}
 
+	public static int getDefaultDotCount() {
+		return defaultDotCount;
+	}
+	
 	/**
 	 *
 	 * @return SimpleFeatureType to use to creating point
@@ -173,7 +183,7 @@ public class LayerBuilder {
 	 * */
 	public static Layer createDashedLineLayer(double startLat, double startLon, double endLat, double endLon, 
 			SimpleFeatureType POINT_TYPE, GeometryFactory geometryFactory, Style PointStyle) {
-		return createDashedLineLayer(startLat, startLon, endLat, endLon, 30, POINT_TYPE, geometryFactory, PointStyle);
+		return createDashedLineLayer(startLat, startLon, endLat, endLon, defaultDotCount, POINT_TYPE, geometryFactory, PointStyle);
 	}
 
 	/**

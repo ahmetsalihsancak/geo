@@ -17,10 +17,8 @@ import org.geotools.map.MapContent;
 import org.geotools.referencing.GeodeticCalculator;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.styling.Font;
-import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleBuilder;
-import org.geotools.styling.TextSymbolizer;
 import org.geotools.swing.JMapFrame;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateList;
@@ -575,32 +573,37 @@ public class MissionAPI {
 	public void drawRectangle(double lat_deg, double lon_deg, int width, int height, double angle, Color col) {
 		height = height * 1000;
 		width = width * 1000;
-        Coordinate[] coords2  = new Coordinate[5];
+        Coordinate[] coords2  = new Coordinate[7];
         GeodeticCalculator geoCalc = new GeodeticCalculator(DefaultGeographicCRS.WGS84);
 		Point2D dest;
 		
 		geoCalc.setStartingGeographicPoint(lon_deg, lat_deg);
+		dest = geoCalc.getStartingGeographicPoint();
+		coords2[0] = new Coordinate(dest.getX(),dest.getY());
 		
 		geoCalc.setDirection((270-angle), width/2);
 		dest = geoCalc.getDestinationGeographicPoint();
-		coords2[0] = new Coordinate(dest.getX(),dest.getY());
-        
-		geoCalc.setStartingGeographicPoint(coords2[0].getX(),coords2[0].getY());
-		geoCalc.setDirection(0-angle, height);
-		dest = geoCalc.getDestinationGeographicPoint();
 		coords2[1] = new Coordinate(dest.getX(),dest.getY());
-
-		geoCalc.setStartingGeographicPoint(coords2[1].getX(),coords2[1].getY());
-		geoCalc.setDirection(90-angle, width);
-		dest = geoCalc.getDestinationGeographicPoint();
-		coords2[2] = new Coordinate(dest.getX(),dest.getY());
-        
-		geoCalc.setStartingGeographicPoint(coords2[2].getX(),coords2[2].getY());
-		geoCalc.setDirection(180-angle, height);
+		
+		geoCalc.setDirection((0-angle), height);
 		dest = geoCalc.getDestinationGeographicPoint();
 		coords2[3] = new Coordinate(dest.getX(),dest.getY());
 		
-		coords2[4] = coords2[0];
+		geoCalc.setDirection((90-angle), width/2);
+		dest = geoCalc.getDestinationGeographicPoint();
+		coords2[5] = new Coordinate(dest.getX(),dest.getY());
+        
+		geoCalc.setStartingGeographicPoint(coords2[1].getX(),coords2[1].getY());
+		geoCalc.setDirection(0-angle, height);
+		dest = geoCalc.getDestinationGeographicPoint();
+		coords2[2] = new Coordinate(dest.getX(),dest.getY());
+
+		geoCalc.setStartingGeographicPoint(coords2[5].getX(),coords2[5].getY());
+		geoCalc.setDirection(0-angle, height);
+		dest = geoCalc.getDestinationGeographicPoint();
+		coords2[4] = new Coordinate(dest.getX(),dest.getY());
+		
+		coords2[6] = coords2[0];
         
 		LinearRing ring = geometryFactory.createLinearRing(coords2);
 		Polygon rect = geometryFactory.createPolygon(ring, null);
@@ -620,11 +623,39 @@ public class MissionAPI {
 		LINE_LAYER_List.add(layer);
 	}
 	
+	/**
+	 * Draws dashed line between two points as many as the given number of points.
+	 * 
+	 * @param startLat_deg
+	 * @param startLon_deg
+	 * @param endLat_deg
+	 * @param endLon_deg
+	 * @param dotCount : Dot count between two point
+	 * @param color : Dot color
+	 * @param width : Dot width
+	 * 
+	 * */
 	public void drawDashedLine(double startLat_deg, double startLon_deg, double endLat_deg, double endLon_deg, int dotCount, Color color, float width) {
 		POINT_STYLE = StylesClass.getPointStyle(POINT_TYPE.DOT, color, width, null, null);
 		Layer layer = LayerBuilder.createDashedLineLayer(startLat_deg, startLon_deg, endLat_deg, endLon_deg, dotCount, DOT_FEATURE_TYPE, geometryFactory, POINT_STYLE);
 		mapContent.addLayer(layer);
 		TRAJECTORY_LAYER_List.add(layer);
+	}
+
+	/**
+	 * Draws dashed line between two points.
+	 * 
+	 * @param startLat_deg
+	 * @param startLon_deg
+	 * @param endLat_deg
+	 * @param endLon_deg
+	 * @param dotCount : Dot count between two point
+	 * @param color : Dot color
+	 * @param width : Dot width
+	 * 
+	 * */
+	public void drawDashedLine(double startLat_deg, double startLon_deg, double endLat_deg, double endLon_deg, Color color, float width) {
+		drawDashedLine(startLat_deg, startLon_deg, endLat_deg, endLon_deg, LayerBuilder.getDefaultDotCount(), color, width);
 	}
 	
 	public void setPointsList(List<PointClass> POINTS_List) {
@@ -638,7 +669,12 @@ public class MissionAPI {
 	/**
 	 * Calculates angle between two points.
 	 * 
-	 * @return 
+	 * @param lat1 : Latitude of first point
+	 * @param lon1 : Longitude of first point
+	 * @param lat2 : Latitude of second point
+	 * @param lon2 : Longitude of second point
+	 * 
+	 * @return angle
 	 * 
 	 * */
 	public double calculateAngle(double lat1, double lon1, double lat2, double lon2) {

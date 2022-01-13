@@ -23,9 +23,12 @@ import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.awt.event.ActionEvent;
 
+import missionapi.MissionAPI;
+import missionapi.classes.LayerBuilder;
 import missionapi.classes.PointClass;
 
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 
 public class Frame1 extends JFrame {
 
@@ -63,14 +66,14 @@ public class Frame1 extends JFrame {
 		missionsClass = new Missions();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 660, 450);
+		setBounds(100, 100, 660, 475);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 11, 624, 389);
+		panel.setBounds(10, 11, 624, 414);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -145,6 +148,22 @@ public class Frame1 extends JFrame {
 				APIMapConfig.API.drawTrajectory(Color.BLUE, 2);
 				APIMapConfig.API.afterDraw();
 				APIMapConfig.testActive = false;
+				
+				if (tableModel.getRowCount() > 0) {
+					for (int i = tableModel.getRowCount()-1; i >= 0; i--) {
+						tableModel.removeRow(i);
+					}
+				}
+				
+				for (PointClass points : APIMapConfig.API.getPointsList()) {
+					tableModel.addRow(new Object[] {
+							points.getPointNo(), 
+							points.getPointName(), 
+							points.getPointType(), 
+							points.getLatitude(), 
+							points.getLongtitude()
+					});
+				}
 			}
 		});
 		okButton.setBounds(576, 30, 48, 23);
@@ -226,6 +245,89 @@ public class Frame1 extends JFrame {
 		JLabel lblNewLabel_11 = new JLabel("LON");
 		lblNewLabel_11.setBounds(494, 133, 120, 14);
 		panel.add(lblNewLabel_11);
+		
+		JButton rectTestButton = new JButton("RECT TEST");
+		rectTestButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				APIMapConfig.API.deleteAllLayersAndPoints();
+				APIMapConfig.API.drawRectangle(33, 33, 250, 120, 0, Color.RED);
+				APIMapConfig.API.drawRectangle(33, 40, 250, 120, 45, Color.BLUE);
+				APIMapConfig.API.drawRectangle(33, 45, 250, 120, 222, Color.ORANGE);
+				APIMapConfig.API.drawRectangle(33, 51, 250, 120, 118, Color.MAGENTA);
+				APIMapConfig.API.afterDraw();
+			}
+		});
+		rectTestButton.setBounds(10, 389, 89, 23);
+		panel.add(rectTestButton);
+		
+		JButton IRLARtestButton = new JButton("IR LAR TEST");
+		IRLARtestButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				APIMapConfig.API.deleteAllLayersAndPoints();
+				APIMapConfig.API.drawIRLAR(41, 28, Color.RED, 250);
+				APIMapConfig.API.drawIRLAR(33, 28, Color.BLUE, 120);
+				APIMapConfig.API.drawIRLAR(41, 33, Color.ORANGE, 3000);
+				APIMapConfig.API.drawIRLAR(33, 33, Color.MAGENTA, 25);
+				APIMapConfig.API.afterDraw();
+			}
+		});
+		IRLARtestButton.setBounds(120, 389, 120, 23);
+		panel.add(IRLARtestButton);
+		
+		JButton IZLARtestButton = new JButton("IZ LAR TEST");
+		IZLARtestButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				APIMapConfig.API.deleteAllLayersAndPoints();
+				APIMapConfig.API.drawIZLAR(33, 33, Color.RED, 2, 150, 25, 0);
+				APIMapConfig.API.drawIZLAR(43, 33, Color.RED, 4, 150, 25, 0);
+				APIMapConfig.API.drawIZLAR(33, 38, Color.RED, 2, 150, 25, 45);
+				APIMapConfig.API.drawIZLAR(43, 38, Color.RED, 2, 250, 100, 0);
+				APIMapConfig.API.drawIZLAR(33, 50, Color.RED, 2, 250, 100, 66);
+				APIMapConfig.API.afterDraw();
+			}
+		});
+		IZLARtestButton.setBounds(260, 389, 100, 23);
+		panel.add(IZLARtestButton);
+		
+		JButton lineTestButton = new JButton("LINE TEST");
+		lineTestButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				APIMapConfig.API.deleteAllLayersAndPoints();
+				APIMapConfig.API.drawLine(42, 28, 38, 43, Color.RED, 2);
+				APIMapConfig.API.drawLine(40, 28, 36, 43, Color.RED, 5);
+				APIMapConfig.API.drawLine(38, 28, 34, 43, Color.BLUE, 2);
+				APIMapConfig.API.afterDraw();
+			}
+		});
+		lineTestButton.setBounds(381, 389, 89, 23);
+		panel.add(lineTestButton);
+		
+		JButton dashedLineTestButton = new JButton("DASHED LINE TEST");
+		dashedLineTestButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				APIMapConfig.API.deleteAllLayersAndPoints();
+				APIMapConfig.API.drawDashedLine(44, 28, 40, 43, LayerBuilder.getDefaultDotCount(), Color.RED, 2);
+				APIMapConfig.API.drawDashedLine(42, 28, 38, 43, LayerBuilder.getDefaultDotCount(), Color.RED, 5);
+				APIMapConfig.API.drawDashedLine(40, 28, 36, 43, 20, Color.BLUE, 2);
+				APIMapConfig.API.drawDashedLine(38, 28, 34, 43, 10, Color.ORANGE, 2);
+				APIMapConfig.API.drawDashedLine(36, 28, 32, 43, 5, Color.MAGENTA, 2);
+				APIMapConfig.API.afterDraw();
+			}
+		});
+		dashedLineTestButton.setBounds(494, 389, 120, 23);
+		panel.add(dashedLineTestButton);
+		
+		JButton deleteAllButton = new JButton("DELETE ALL");
+		deleteAllButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				APIMapConfig.API.deleteAllLayersAndPoints();
+				APIMapConfig.API.afterDraw();
+			}
+		});
+		deleteAllButton.setBackground(Color.RED);
+		deleteAllButton.setForeground(Color.WHITE);
+		deleteAllButton.setBounds(480, 94, 134, 23);
+		panel.add(deleteAllButton);
 	}
 
 	private void drawButtonAction() {

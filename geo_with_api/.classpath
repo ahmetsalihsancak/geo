@@ -8,7 +8,8 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="dted"/>
 	<classpathentry kind="src" path="shapefiles"/>
-	<classpathentry kind="src" path="tiff"/>
+	<classpathentry excluding="geotools/officialtiff/" kind="src" path="tiff"/>
+	<classpathentry kind="src" path="geotools_tiff"/>
 	<classpathentry kind="lib" path="C:/Users/ahmet/Downloads/geotools/geotools-26.1-bin/geotools-26.1/lib/aircompressor-0.20.jar"/>
 	<classpathentry kind="lib" path="C:/Users/ahmet/Downloads/geotools/geotools-26.1-bin/geotools-26.1/lib/antlr4-runtime-4.7.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/ahmet/Downloads/geotools/geotools-26.1-bin/geotools-26.1/lib/aws-java-sdk-core-1.11.236.jar"/>

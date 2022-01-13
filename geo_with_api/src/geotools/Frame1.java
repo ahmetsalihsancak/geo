@@ -280,7 +280,7 @@ public class Frame1 extends JFrame {
 				APIMapConfig.API.deleteAllLayersAndPoints();
 				APIMapConfig.API.drawIZLAR(33, 33, Color.RED, 2, 150, 25, 0);
 				APIMapConfig.API.drawIZLAR(43, 33, Color.RED, 4, 150, 25, 0);
-				APIMapConfig.API.drawIZLAR(33, 38, Color.RED, 2, 150, 25, 45);
+				APIMapConfig.API.drawIZLAR(35, 38, Color.RED, 2, 150, 25, 45);
 				APIMapConfig.API.drawIZLAR(43, 38, Color.RED, 2, 250, 100, 0);
 				APIMapConfig.API.drawIZLAR(33, 50, Color.RED, 2, 250, 100, 66);
 				APIMapConfig.API.afterDraw();

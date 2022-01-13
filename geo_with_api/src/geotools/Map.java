@@ -10,6 +10,7 @@ import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.map.FeatureLayer;
 import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.styling.SLD;
 import org.geotools.styling.Style;
 import org.geotools.swing.JMapFrame;
@@ -37,6 +38,7 @@ public class Map {
         Style style = SLD.createSimpleStyle(featureSource.getSchema());
         Layer layer = new FeatureLayer(cachedSource, style);
         map.addLayer(layer);
+        map.getViewport().setCoordinateReferenceSystem(DefaultGeographicCRS.WGS84);
         
         setDragToolDelay(mapFrame, 100);
 
@@ -57,6 +59,7 @@ public class Map {
         Style style = SLD.createSimpleStyle(featureSource.getSchema());
         Layer layer = new FeatureLayer(cachedSource, style);
         map.addLayer(layer);
+        map.getViewport().setCoordinateReferenceSystem(DefaultGeographicCRS.WGS84);
 
         setDragToolDelay(mapFrame, 100);
 

@@ -20,6 +20,8 @@ import org.geotools.map.FeatureLayer;
 import org.geotools.map.GridReaderLayer;
 import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
+import org.geotools.referencing.crs.DefaultGeocentricCRS;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.styling.ChannelSelection;
 import org.geotools.styling.ContrastEnhancement;
 import org.geotools.styling.RasterSymbolizer;
@@ -30,6 +32,7 @@ import org.geotools.styling.StyleFactory;
 import org.geotools.swing.JMapFrame;
 import org.geotools.util.factory.Hints;
 import org.opengis.filter.FilterFactory2;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.style.ContrastMethod;
 
 import geotools.Map;
@@ -53,6 +56,7 @@ public class GeoTIFF {
         Style rasterStyle = createGreyscaleStyle(1);
         Layer rasterLayer = new GridReaderLayer(reader, rasterStyle);
         map.addLayer(rasterLayer);
+        map.getViewport().setCoordinateReferenceSystem(DefaultGeographicCRS.WGS84);
         //mapFrame.enableLayerTable(true);
         
     }

@@ -35,7 +35,7 @@ public class Frame1 extends JFrame {
 	private JTextField pointNameTextField;
 	private JTextField fontNameTextField;
 	private JTextField fontSizeTextField;
-	private JComboBox missionComboBox;
+	private JComboBox<Object> missionComboBox;
 	private Missions missionsClass;
 	private JTable table;
 	private DefaultTableModel tableModel;
@@ -177,7 +177,7 @@ public class Frame1 extends JFrame {
 				lblNewLabel_12.setText("SELECTED MISSION: " + mType);
 			}
 		});
-		missionComboBox.setModel(new DefaultComboBoxModel(MISSIONS.values()));
+		missionComboBox.setModel(new DefaultComboBoxModel<Object>(MISSIONS.values()));
 		missionComboBox.setBounds(0, 94, 86, 22);
 		panel.add(missionComboBox);
 		
@@ -231,7 +231,7 @@ public class Frame1 extends JFrame {
 	private void drawButtonAction() {
 		APIMapConfig.API.deleteAllLayersAndPoints();
 		MISSIONS mType = (MISSIONS) missionComboBox.getSelectedItem();
-		APIMapConfig.API.drawTrajectory(missionsClass.getMission(mType), Color.RED, 2, null);
+		APIMapConfig.API.drawTrajectory(missionsClass.getMission(mType), Color.RED, 2, APIMapConfig.defaultFontName, APIMapConfig.defaultFontSize);
 		APIMapConfig.API.afterDraw();
 		APIMapConfig.testActive = false;
 	}

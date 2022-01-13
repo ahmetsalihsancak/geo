@@ -17,8 +17,10 @@ import org.geotools.map.MapContent;
 import org.geotools.referencing.GeodeticCalculator;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.styling.Font;
+import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleBuilder;
+import org.geotools.styling.TextSymbolizer;
 import org.geotools.swing.JMapFrame;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateList;
@@ -180,7 +182,7 @@ public class MissionAPI {
 	}
 
 	/**
-	 * Clear points list
+	 * Clears points list
 	 * 
 	 * */
 	public void clearPointsList() {
@@ -188,7 +190,7 @@ public class MissionAPI {
 	}
 	
 	/**
-	 * Deletes all layers and point list
+	 * Deletes all layers and {@link MissionAPI} point list
 	 * 
 	 * */
 	public void deleteAllLayersAndPoints() {
@@ -197,16 +199,29 @@ public class MissionAPI {
 	}
 	
 	/**
-	 * Draws IR LAR (Circle)
+	 * Draws IR LAR
 	 * 
 	 * @param centerLat : Center latitude of IRLAR
 	 * @param centerLon : Center longitude of IRLAR
 	 * @param color : IRLAR color
-	 * @param radius : IRLAR radius
+	 * @param radius : IRLAR radius (km)
 	 * 
 	 * */
 	public void drawIRLAR(double centerLat, double centerLon, Color color, int radius) {
-        int r2 = radius * 1000;
+        drawCircle(centerLat, centerLon, color, radius);
+	}
+	
+	/**
+	 * Draws circle
+	 * 
+	 * @param centerLat : Center latitude of circle
+	 * @param centerLon : Center longitude of circle
+	 * @param color : Circle color
+	 * @param radius : Circle radius (km)
+	 * 
+	 * */
+	public void drawCircle(double centerLat, double centerLon, Color color, int radius) {
+		int r2 = radius * 1000;
         Coordinate[] coords2  = new Coordinate[4];
         GeodeticCalculator geoCalc = new GeodeticCalculator(DefaultGeographicCRS.WGS84);
 		geoCalc.setStartingGeographicPoint(centerLon, centerLat);
@@ -229,9 +244,10 @@ public class MissionAPI {
 		IRLAR_LAYER_List.add(layer);  
 	}
 	
-	
 	/**
 	 * Adds waypoint with given name.
+	 * <p>
+	 * Font color cannot change. (Black only) The point name is linked to the point, moves with the point and centers the point.
 	 * 
 	 * @param centerLat : Center latitude of point
 	 * @param centerLon : Center longitude of point
@@ -246,7 +262,7 @@ public class MissionAPI {
 	}
 
 	/**
-	 * Adds waypoint.
+	 * Adds waypoint without name.
 	 * 
 	 * @param centerLat : Center latitude of point
 	 * @param centerLon : Center longitude of point
@@ -259,6 +275,8 @@ public class MissionAPI {
 
 	/**
 	 * Adds target point with given name.
+	 * <p>
+	 * Font color cannot change. (Black only) The point name is linked to the point, moves with the point and centers the point.
 	 * 
 	 * @param centerLat : Center latitude of point
 	 * @param centerLon : Center longitude of point
@@ -273,7 +291,7 @@ public class MissionAPI {
 	}
 
 	/**
-	 * Adds target point.
+	 * Adds target point without name.
 	 * 
 	 * @param centerLat : Center latitude of point
 	 * @param centerLon : Center longitude of point
@@ -286,6 +304,8 @@ public class MissionAPI {
 
 	/**
 	 * Adds release point with given name.
+	 * <p>
+	 * Font color cannot change. (Black only) The point name is linked to the point, moves with the point and centers the point.
 	 * 
 	 * @param centerLat : Center latitude of point
 	 * @param centerLon : Center longitude of point
@@ -300,7 +320,7 @@ public class MissionAPI {
 	}
 
 	/**
-	 * Adds release point.
+	 * Adds release point without name.
 	 * 
 	 * @param centerLat : Center latitude of point
 	 * @param centerLon : Center longitude of point
@@ -313,6 +333,8 @@ public class MissionAPI {
 
 	/**
 	 * Adds point with given type and name.
+	 * <p>
+	 * Font color cannot change. (Black only) The point name is linked to the point, moves with the point and centers the point.
 	 * 
 	 * @param pType : POINT_TYPE of the point
 	 * @param centerLat : Center latitude of point
@@ -429,7 +451,11 @@ public class MissionAPI {
 	 * <p>
 	 * Points must be entered sequentially. (RELEASE-WAYPOINT(S)-TARGET)
 	 * 
-	 * @param POINTS_List : List of points
+	 * @param lat_deg : Latitude array.
+	 * @param lon_deg : Longtitude array.
+	 * @param point_color
+	 * @param trajectory_color
+	 * @param trajectory_width
 	 * 
 	 * */
 	public void drawTrajectory(double[] lat_deg, double[] lon_deg, Color point_color, Color trajectory_color, int trajectory_width) {
@@ -443,14 +469,21 @@ public class MissionAPI {
 	
 	/**
 	 * Draws trajectory and points (with name) using the given PointClass list.
+	 * <p>
+	 * Font color cannot change. (Black only) The point name is linked to the point, moves with the point and centers the point.
 	 * 
 	 * @param POINTS_List : List of points
-	 * @param font : null == default font
+	 * @param trajectory_color
+	 * @param trajectory_width
+	 * @param fontname
+	 * @param size : Font size
 	 * 
 	 * */
-	public void drawTrajectory(List<PointClass> POINTS_List, Color trajectory_color, int trajectory_width, Font font) {
+	public void drawTrajectory(List<PointClass> POINTS_List, Color trajectory_color, int trajectory_width, String fontname, int size) {
 		setPointsList(POINTS_List);
 		deletePointsLayer();
+		StyleBuilder styleBuilder = new StyleBuilder();
+		Font font = styleBuilder.createFont(fontname, size);
 		for (PointClass points : POINTS_List) {
     		Style PointStyle = StylesClass.getPointStyle(points.getPointType(), StylesClass.getDefaultPointColor(), "Name:", font);
     		Layer layer = LayerBuilder.createPointLayer(points.getPointName(), points.getLatitude(), points.getLongtitude(), points.getPointNo(), POINT_FEATURE_TYPE, geometryFactory, PointStyle);

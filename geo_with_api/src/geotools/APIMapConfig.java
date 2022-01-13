@@ -43,7 +43,11 @@ public class APIMapConfig {
 	
 	private static DefaultTableModel tableModel;
 	private static Frame1 frame1;
+	
 	public static boolean testActive = false;
+	
+	public static String defaultFontName = "Georgia";
+	public static int defaultFontSize = 12;
 	
 	private static void TEST() {
 		API.deleteAllLayersAndPoints();
@@ -51,7 +55,7 @@ public class APIMapConfig {
 		API.drawIRLAR(42, 28, new Color(252, 207, 3), 100); //100km çaplý IR LAR
 		API.addWaypoint(42, 28, Color.GREEN); // Ýsimsiz waypoint
 		API.addWaypoint(42, 30, Color.RED); // Ýsimsiz waypoint
-		API.drawText("Ahmet Salih Sancak", 42, 30, Color.ORANGE, "Georgia", 12); // Text
+		API.drawText("Ahmet Salih Sancak", 42, 30, Color.ORANGE, defaultFontName, defaultFontSize); // Text
 		API.drawIZLAR(33, 33, Color.RED, 1, 150, 25, 0); // 0 derece 150km-25km IZ LAR
 		API.addTarget(37, 39, Color.RED); // Ýsimsiz target
 		API.drawTrajectory(Color.RED, 2); // Class içerisinde kaydedilen noktalarýn rotasý
@@ -61,11 +65,11 @@ public class APIMapConfig {
 	
 	private static void TEST2() {
 		API.deleteAllLayersAndPoints();
-		API.addReleasePoint(35, 35, "RELEASE", Color.RED, "Times New Roman", 10); // Ýsimli release
+		API.addReleasePoint(35, 35, "RELEASE", Color.RED, defaultFontName, defaultFontSize); // Ýsimli release
 		API.addWaypoint(42, 28, Color.RED);
-		API.addWaypoint(42, 30, "WAYPOINT", Color.RED, "Georgia", 10); // Ýsimli waypoint
+		API.addWaypoint(42, 30, "WAYPOINT", Color.RED, defaultFontName, defaultFontSize); // Ýsimli waypoint
 		API.addWaypoint(41, 32, Color.RED);
-		API.addTarget(37, 39, "Target", Color.RED, "Georgia", 12); // Ýsimli target
+		API.addTarget(37, 39, "Target", Color.RED, defaultFontName, defaultFontSize); // Ýsimli target
 		API.drawTrajectory(Color.RED, 2);
 		API.drawIRLAR(37, 39, Color.BLUE, 300); // 300km IR LAR
 		API.drawIZLAR(33, 35, Color.BLACK, 2, 150, 25, 45); // 45 derece
@@ -83,7 +87,7 @@ public class APIMapConfig {
 		points.add(new PointClass(42, 30, 2, POINT_TYPE.WAYPOINT, "WAYPOINT")); // isimli waypoint
 		points.add(new PointClass(41, 32, 3, POINT_TYPE.WAYPOINT, ""));
 		points.add(new PointClass(37, 39, 4, POINT_TYPE.TARGET, ""));
-		API.drawTrajectory(points, Color.RED, 2, null); // noktalarýn çizdirilmesi
+		API.drawTrajectory(points, Color.RED, 2, defaultFontName, defaultFontSize); // noktalarýn çizdirilmesi
 		API.afterDraw();
 		testActive = true;
 	}
@@ -112,11 +116,11 @@ public class APIMapConfig {
 		API.addWaypoint(lat[3], lon[3], Color.RED);
 		API.addTarget(lat[4], lon[4], Color.RED);
 		API.drawTrajectory(Color.RED, 2);
-		API.drawText("Salma", lat[0]+0.1, lon[0], Color.RED, "Georgia", 12);
-		API.drawText("YN1", lat[1]-0.1, lon[1], Color.RED, "Georgia", 12);
-		API.drawText("YN2", lat[2]+0.1, lon[2], Color.RED, "Georgia", 12);
-		API.drawText("TBYN", lat[3]+0.1, lon[3], Color.RED, "Georgia", 12);
-		API.drawText("Hedef", lat[4]-0.1, lon[4], Color.RED, "Georgia", 12);
+		API.drawText("Salma", lat[0]+0.1, lon[0], Color.RED, defaultFontName, defaultFontSize);
+		API.drawText("YN1", lat[1]-0.1, lon[1], Color.RED, defaultFontName, defaultFontSize);
+		API.drawText("YN2", lat[2]+0.1, lon[2], Color.RED, defaultFontName, defaultFontSize);
+		API.drawText("TBYN", lat[3]+0.1, lon[3], Color.RED, defaultFontName, defaultFontSize);
+		API.drawText("Hedef", lat[4]-0.1, lon[4], Color.RED, defaultFontName, defaultFontSize);
 		API.drawIRLAR(lat[4], lon[4], Color.BLUE, 300);
 		API.drawIZLAR(lat[0], lon[0], Color.RED, 1, 100, 15, 
 				API.calculateAngle(lat[0], lon[0], lat[1], lon[1]));
@@ -285,9 +289,11 @@ public class APIMapConfig {
       		}
         }); 
 	}
+	
 	/**
-	 * Nokta relocate iþlemini point_no deðerine göre yapmaktadýr.
-	 * Noktalar sýralý halde deðilse çalýþmamaktadýr.
+	 * Nokta relocate iþlemini point_no deðerine göre yapmaktadýr. Noktalar sýralý halde deðilse çalýþmamaktadýr.
+	 * <p>
+	 * TODO: Bu iþlev gt-swing.jar içerisinde normal cursor'a atanarak çalýþýtýrýlacaktýr.
 	 * 
 	 * */
 	private static void relocateButton() {
@@ -417,7 +423,7 @@ public class APIMapConfig {
 	                 points.remove(pointNo);
 		             PointClass PC = new PointClass(worldPos.y, worldPos.x,pointNo, pointType, pointName);
 		             points.add(pointNo,PC);
-		             API.drawTrajectory(points, Color.RED, 2, null);
+		             API.drawTrajectory(points, Color.RED, 2, defaultFontName, defaultFontSize);
 		             API.afterDraw();
 					 readyToPrint = true;
                 	 created_graphics.dispose();

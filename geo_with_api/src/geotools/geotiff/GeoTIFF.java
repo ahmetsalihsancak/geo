@@ -9,8 +9,14 @@ import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.coverage.grid.io.GridCoverage2DReader;
 import org.geotools.coverage.grid.io.GridFormatFinder;
+import org.geotools.data.DataUtilities;
+import org.geotools.data.FileDataStore;
+import org.geotools.data.FileDataStoreFinder;
+import org.geotools.data.collection.SpatialIndexFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.gce.geotiff.GeoTiffFormat;
+import org.geotools.map.FeatureLayer;
 import org.geotools.map.GridReaderLayer;
 import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
@@ -48,50 +54,9 @@ public class GeoTIFF {
         Layer rasterLayer = new GridReaderLayer(reader, rasterStyle);
         map.addLayer(rasterLayer);
         //mapFrame.enableLayerTable(true);
-    }
-    
-    /**
-     * Create a Style to display a selected band of the GeoTIFF image as a greyscale layer
-     *
-     * @return a new Style instance to render the image in greyscale
-     */
-    private static Style createGreyscaleStyle() {
-        GridCoverage2D cov = null;
-        try {
-            cov = reader.read(null);
-        } catch (IOException giveUp) {
-            throw new RuntimeException(giveUp);
-        }
-        int numBands = cov.getNumSampleDimensions();
-        Integer[] bandNumbers = new Integer[numBands];
-        for (int i = 0; i < numBands; i++) {
-            bandNumbers[i] = i + 1;
-        }
-        Object selection =
-                JOptionPane.showInputDialog(
-                		mapFrame,
-                        "Band to use for greyscale display",
-                        "Select an image band",
-                        JOptionPane.QUESTION_MESSAGE,
-                        null,
-                        bandNumbers,
-                        1);
-        if (selection != null) {
-            int band = ((Number) selection).intValue();
-            return createGreyscaleStyle(band);
-        }
-        return null;
+        
     }
 
-    /**
-     * Create a Style to display the specified band of the GeoTIFF image as a greyscale layer.
-     *
-     * <p>This method is a helper for createGreyScale() and is also called directly by the
-     * displayLayers() method when the application first starts.
-     *
-     * @param band the image band to use for the greyscale display
-     * @return a new Style instance to render the image in greyscale
-     */
     private static Style createGreyscaleStyle(int band) {
         ContrastEnhancement ce = sf.contrastEnhancement(ff.literal(1.0), ContrastMethod.NORMALIZE);
         SelectedChannelType sct = sf.createSelectedChannelType(String.valueOf(band), ce);

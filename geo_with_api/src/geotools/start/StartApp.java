@@ -16,7 +16,8 @@ public class StartApp {
 			public void run() {
 				ClassLoader classLoader = getClass().getClassLoader();
 				File file = new File(classLoader.getResource("ne_10m_admin_0_countries.shp").getFile());
-				APIMapConfig.StartApp(file);
+				File rasterFile = new File(classLoader.getResource("MOS_CZ_GK3_250.tif").getFile());
+				APIMapConfig.StartApp(file, rasterFile);
 			}
 		});
 	}

@@ -37,7 +37,7 @@ public class Map {
         Style style = SLD.createSimpleStyle(featureSource.getSchema());
         Layer layer = new FeatureLayer(cachedSource, style);
         map.addLayer(layer);
-
+        
         setDragToolDelay(mapFrame, 100);
 
         showMap(mapFrame, 1200, 800);

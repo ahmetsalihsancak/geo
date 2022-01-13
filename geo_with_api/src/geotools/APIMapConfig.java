@@ -24,6 +24,7 @@ import org.geotools.swing.JMapFrame;
 import org.geotools.swing.event.MapMouseEvent;
 import org.geotools.swing.tool.CursorTool;
 
+import geotools.raster.ImageLab;
 import missionapi.MissionAPI;
 import missionapi.classes.PointClass;
 import missionapi.classes.Styles.POINT_TYPE;
@@ -128,10 +129,11 @@ public class APIMapConfig {
 		testActive = true;
 	}
 	
-	public static void StartApp(File file) {
+	public static void StartApp(File file, File rasterFile) {
 		try {
 			setShapefilePath(file.getAbsolutePath());
 			beforeStart();
+			ImageLab.showTIFF(rasterFile);
 			Map.StartMap(file);
 			afterStart();
 		} catch (Exception e) {

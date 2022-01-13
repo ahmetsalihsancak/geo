@@ -1,0 +1,26 @@
+ Image Format           :    GeoTIFF (No Compression)
+ Image Size             :    1956 Columns x 1122 Lines x 3 Bands
+ Image Type             :    8-bit
+
+ Georeference Units     : TM          E015
+ Projection             : Transverse Mercator (Gauss-Krueger)
+ Datum - Ellipsoid      : Krassovsky
+ Grid units             : METRE
+
+ Upper Left  Corner     :      3291500.000  E        5659500.000  N 
+ Upper Right Corner     :      3780500.000  E        5659500.000  N 
+ Image Centre           :      3536000.000  E        5519250.000  N 
+ Lower Left  Corner     :      3291500.000  E        5379000.000  N 
+ Lower Right Corner     :      3780500.000  E        5379000.000  N 
+
+ Pixel Size             :          250.000  E            250.000  N 
+
+ Upper Left  Corner     :  12d01'40.09" E  Lon   51d01'40.60" N  Lat
+ Upper Right Corner     :  18d59'46.46" E  Lon   50d59'50.54" N  Lat
+ Image Centre           :  15d30'00.30" E  Lon   49d48'13.96" N  Lat
+ Lower Left  Corner     :  12d10'41.04" E  Lon   48d30'33.43" N  Lat
+ Lower Right Corner     :  18d47'40.11" E  Lon   48d28'52.69" N  Lat
+
+ True origin            :    15d00'00.0000"E  0d00'00.0000"N
+ False: Easting/Northing:       3500000.00            0.00
+ Scale                  :     1.0000000000

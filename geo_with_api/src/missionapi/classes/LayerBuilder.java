@@ -148,7 +148,19 @@ public class LayerBuilder {
        return lay;
 	}
 	
-	public static Layer createPointLayer(String name, double lat, double lon, int point_no, SimpleFeatureType POINT_TYPE, GeometryFactory geometryFactory, Style PointStyle) {
+	/**
+	 *
+	 * @param name
+	 * @param lat
+	 * @param lon
+	 * @param point_no
+	 * @param POINT_TYPE
+	 * @param geometryFactory
+	 * @param PointStyle
+	 * @return Point layer
+	 */
+	public static Layer createPointLayer(String name, double lat, double lon, int point_no, SimpleFeatureType POINT_TYPE, 
+			GeometryFactory geometryFactory, Style PointStyle) {
        SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(POINT_TYPE);
        Point locationPoint = geometryFactory.createPoint(new Coordinate(lon, lat));
        featureBuilder.add(locationPoint);

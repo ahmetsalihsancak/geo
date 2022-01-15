@@ -1,0 +1,7 @@
+Cay 5
+Soda 3
+Latte 8
+Su 2
+Kahve 7
+Espresso 8
+Cheescake 12
